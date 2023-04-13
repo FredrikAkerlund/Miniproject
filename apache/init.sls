@@ -1,23 +1,26 @@
 apache_module:
   pkg.installed:
-    - name: "apache2"
-    - name: "curl"
+    - names:
+      - "apache2"
+      - "curl"
     - refresh: True
 
 
 enableuserdir:
-  file.managed:
-    - name: "/etc/apache2/mods-enabled/userdir.conf"
-    - source: "salt://apache/userdir.conf"
+  cmd.run:
+    - name: "a2enmod userdir"
 
 defaultfrontpage:
   file.managed:
     - name: "/var/www/html/index.html"
     - source: "salt://apache/index.html"
-
+    - makedirs: True
 apache2:
   service.running:
     - name: "apache2"
     - watch:
-      - file: "/etc/apache2/mods-enabled/userdir.conf"
+      - file: "/var/www/html/index.html"
     - enable: True
+    - reload: True
+
+
