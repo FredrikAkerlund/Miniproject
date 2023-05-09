@@ -94,10 +94,118 @@ Seuraavaksi kokeilen suoraan asentaa VScode
     vagrant@fmaster:/srv/salt/apache$ sudo salt 'windowslave' chocolatey.install vscode
 
 Linuxilla asennan myös visual studio coden. Tämä asennetaan .deb paketista.
+.deb paketti lähde: https://code.visualstudio.com/docs/?dv=linux64_deb
 
 Eka teen käsin:
+        sudo apt-get install /home/vagrant/Miniproject/VBS/code_1.78.0-1683145611_amd64.deb -y
+        vagrant@fmaster:~/Miniproject/VBS$ code --version
+        1.78.0
+        252e5463d60e63238250799aef7375787f68b4ee
+        x64
 
+Tästä näen että uusin VScode on asenettu. En pääse vagrantkoneen työpäydälle jostain syystä. Työpöytä ei  taida olla asenettuna.
+
+Seuraavaksi teen asennuksista idempotentin.
+
+Aloitan luomalla `vbswin` tilan:
+
+Kansioon `/srv/salt/vbswin` luon init.sls tiedoston: 
+
+        chocolatey:
+          pkg.installed
+        choco:
+          chocolatey.installed:
+            - name: 'vscode'
+
+Tämä tila asentaa chocolatey paketinhallinnan sekä `visualstudiocode` ohjelmiston:
+
+Lopputulos: 
+
+                windowslave:
+        ----------
+                ID: chocolatey
+            Function: pkg.installed
+            Result: True
+            Comment: All specified packages are already installed
+            Started: 10:32:01.982323
+            Duration: 287.23 ms
+            Changes:
+        ----------
+                ID: choco
+            Function: chocolatey.installed
+                Name: vscode
+            Result: True
+            Comment: vscode 1.78.0 is already installed
+            Started: 10:32:02.269553
+            Duration: 2876.952 ms
+            Changes:
+
+        Summary for windowslave
+        ------------
+        Succeeded: 2
+        Failed:    0
+
+Kuvanruutukaappaus: WINKKARISTA:
+
+
+
+Seuraavaksi teen `vbslinux` tilan:
+
+Kansioon `/srv/salt/vbslinux` luon init.sls tiedoston:
         
+        /local/apt/repository/vscode:
+        file.managed:
+            - source: 'salt://vbslinux/code_1.78.0-1683145611_amd64.deb'
+            - makedirs: 'True'
+        vscode:
+        cmd.run:
+            - name: "apt-get install -y /local/apt/repository/code_1.78.0-1683145611_amd64.deb" 
+
+Tila luo kansioon: `/local/apt/repository/` .deb tiedoston josta paketti asennetaan.
+
+        Lopputulos: 
+        vagrant@fmaster:/srv/salt/vbslinux$ sudo salt 'f001' state.apply 'vbslinux'
+        f001:
+        ----------
+                ID: /local/apt/repository/code_1.78.0-1683145611_amd64.deb
+            Function: file.managed
+            Result: True
+            Comment: File /local/apt/repository/code_1.78.0-1683145611_amd64.deb is in the correct state
+            Started: 19:06:20.870698
+            Duration: 606.534 ms
+            Changes:
+        ----------
+                ID: vscode
+            Function: cmd.run
+                Name: apt-get install -y /local/apt/repository/code_1.78.0-1683145611_amd64.deb
+            Result: True
+            Comment: Command "apt-get install -y /local/apt/repository/code_1.78.0-1683145611_amd64.deb" run
+            Started: 19:06:21.477876
+            Duration: 503.56 ms
+            Changes:
+                    ----------
+                    pid:
+                        16902
+                    retcode:
+                        0
+                    stderr:
+                    stdout:
+                        Reading package lists...
+                        Building dependency tree...
+                        Reading state information...
+                        code is already the newest version (1.78.0-1683145611).
+                        0 upgraded, 0 newly installed, 0 to remove and 34 not upgraded.
+
+        Summary for f001
+        ------------
+        Succeeded: 2 (changed=1)
+        Failed:    0
+        ------------
+        Total states run:     2
+        Total run time:   1.110 s
+        
+
+
 
 ### Apachen asennus
 
