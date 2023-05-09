@@ -158,7 +158,7 @@ Kansioon `/srv/salt/vbslinux` luon init.sls tiedoston:
             - source: 'salt://vbslinux/code_1.78.0-1683145611_amd64.deb'
             - makedirs: 'True'
         vscode:
-        cmd.run:
+          cmd.run:
             - name: "apt-get install -y /local/apt/repository/code_1.78.0-1683145611_amd64.deb" 
 
 Tila luo kansioon: `/local/apt/repository/` .deb tiedoston josta paketti asennetaan.
@@ -204,6 +204,43 @@ Tila luo kansioon: `/local/apt/repository/` .deb tiedoston josta paketti asennet
         Total states run:     2
         Total run time:   1.110 s
         
+Yritin asentaa pkg.installed mutta törmäsin jatkuvasti ongelmiin.
+
+Init.sls tiedostoni näytti tältä:
+
+        /local/apt/repository/vscode:
+         file.managed:
+            - source: 'salt://vbslinux/code_1.78.0-1683145611_amd64.deb'
+             - makedirs: 'True'
+         vscode:
+           pkg.installed:
+            - name: "/local/apt/repository/code_1.78.0-1683145611_amd64.deb" 
+
+        vagrant@fmaster:/srv/salt/vbslinux$ sudo salt 'f001' state.apply 'vbslinux'
+        f001:
+        ----------
+                ID: /local/apt/repository/code_1.78.0-1683145611_amd64.deb
+            Function: file.managed
+            Result: True
+            Comment: File /local/apt/repository/code_1.78.0-1683145611_amd64.deb is in the correct state
+            Started: 19:01:12.861970
+            Duration: 888.412 ms
+            Changes:
+        ----------
+                ID: vscode
+            Function: pkg.installed
+            Result: False
+            Comment: The following packages failed to install/update: /local/apt/repository/code_1.78.0-1683145611_amd64.deb
+            Started: 19:01:14.408317
+            Duration: 2163.503 ms
+            Changes:
+
+        Summary for f001
+        ------------
+        Succeeded: 1
+        Failed:    1
+        ------------
+En vaan osannut löytää vastausta tähän.
 
 
 
