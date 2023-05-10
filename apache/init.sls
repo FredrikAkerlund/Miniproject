@@ -17,7 +17,7 @@ defaultfrontpage:
 
 apache2:
   service.running:
-    - name "apache2"
+    - name: "apache2"
     - watch:
-      - file: userdir_conf
+      - file: "/etc/apache2/mods-enabled/userdir.conf"
     - enable: True
