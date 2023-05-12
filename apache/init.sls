@@ -1,26 +1,23 @@
-apache_MOD:
+apache_module:
   pkg.installed:
     - name: "apache2"
-    - name: "libapache2-mod-userdir"
+    - name: "curl"
+    - refresh: True
+
+
+enableuserdir:
+  file.managed:
+    - name: "/etc/apache2/mods-enabled/userdir.conf"
+    - source: "salt://apache/userdir.conf"
+
+defaultfrontpage:
+  file.managed:
+    - name: "/var/www/html/index.html"
+    - source: "salt://apache/index.html"
+
 apache2:
   service.running:
+    - name "apache2"
     - watch:
-      - file "/etc/apache2/sites-available/frontpage.conf"
-      -pkg: "mod_userdir"
-/etc/apache2/sites-available/frontpage.conf:
-  file.managed:
-    - source: "salt://apache/frontpage.conf"
-apache_user_directories:
-  file.directory:
-    - name: /var/www/html/users
-    - user: www-data
-    - group: www-data
-    - dir_mode: 755
-{% for user in salt['user.list_users']() %}
-apache_user_directory_{{ user }}:
-  file.directory:
-    - name: /var/www/html/users/{{ user }}/public_html
-    - user: {{ user }}
-    - group: {{ user }}
-    - dir_mode: 755
-{% endfor %}
+      - file: userdir_conf
+    - enable: True
