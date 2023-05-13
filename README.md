@@ -240,11 +240,58 @@ Init.sls tiedostoni näytti tältä:
         Succeeded: 1
         Failed:    1
         ------------
-En vaan osannut löytää vastausta tähän.
+En vaan osannut löytää vastausta tähän. Joten päädyin käyttämään cmd.run komentoa.
 
+Init tiedosto:
+
+                /local/apt/repository/code_1.78.0-1683145611_amd64.deb:
+                  file.managed:
+                    - source: "salt://vbslinux/code_1.78.0-1683145611_amd64.deb"
+                    - makedirs: True
+                vscode:
+                  cmd.run:
+                    - name: "apt-get install -y /local/apt/repository/code_1.78.0-1683145611_amd64.deb"
+
+Tällä sain toimimaan.
+Lopputulos: 
+![image](https://github.com/FredrikAkerlund/Miniproject/assets/122887178/ed8dd155-ba34-4a5b-894b-e18ca1c10c2e)
 
 
 ### Apachen asennus
+Tässä huomiona että tein apachen asennusta mutta menetin kaiken työni kesken raportointia. Joten näytän miltä init.sls tiedostoni näyttää lopussa ja yritän muistaa mitä vaiheta työskentelyssä tapahtui.
+
+                apache_module:
+                  pkg.installed:
+                    - names:
+                      - "apache2"
+                      - "curl"
+                    - refresh: True
+
+
+                enableuserdir:
+                  cmd.run:
+                    - name: "a2enmod userdir"
+
+                defaultfrontpage:
+                  file.managed:
+                    - name: "/var/www/html/index.html"
+                    - source: "salt://apache/index.html"
+                    - makedirs: True
+                apache2:
+                  service.running:
+                    - name: "apache2"
+                    - watch:
+                      - file: "/var/www/html/index.html"
+                    - enable: True
+                    - reload: True
+                    
+Kun minulla on nyt toimiva moduli näytän lopputuloksen.
+![image](https://github.com/FredrikAkerlund/Miniproject/assets/122887178/583e7b88-3d0f-443a-9517-b39e98f7b207)
+
+Valitettavasti tästä työstö vaiheesta jäi monta hyvää opetuspistettä raportoimasta.
+
+Loppujen lopuksi en päässyt kokonaan haluaamaani lopputulokseen mutta jouduin taas jälleen kerran käyttämään cmd.run komentoa.
+
 
 ### SSH konfigurointi
 
