@@ -292,10 +292,39 @@ Valitettavasti tästä työstö vaiheesta jäi monta hyvää opetuspistettä rap
 
 Loppujen lopuksi en päässyt kokonaan haluaamaani lopputulokseen mutta jouduin taas jälleen kerran käyttämään cmd.run komentoa.
 
+### Micro for windows and Linux
 
-### SSH konfigurointi
+Olen aikasemmin ladannut asennustiedostot Microlle. Sekä linux Debian sekä Windows 10.
 
-### PostSQL konfigurointi
+Lähde: https://github.com/zyedidia/micro/releases
+
+Aloitan asentamalla käsin linuxille. Aika yksinkertaista:
+
+        vagrant@fmaster:~$ sudo apt install micro
+        vagrant@fmaster:~$ micro --version
+        Version: 2.0.8
+
+Kuten oletinkin se toimii
+
+Ja kyseessä on yksinkertainen init.sls tiedosto:
+
+        microforwin:
+        file.managed:
+            - name: "C:\Windows\System32\micro.exe"
+            - source: "salt://microwin/micro"
+
+Lopputulos:
+
+image.png
+
+
+
+Windowsilla siirrän .exe tiedoston `C://windows/system32` kansioon.
+
+Totean nopeasti että helpoin tapa on luoda suoraan idempotentti tila sitä varten
+
+
+
 ### Apache
 ### Django kehitysympäristö
 - UFW Tarvittavat portit auki
