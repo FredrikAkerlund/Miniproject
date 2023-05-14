@@ -304,10 +304,23 @@ Aloitan asentamalla käsin linuxille. Aika yksinkertaista:
         vagrant@fmaster:~$ micro --version
         Version: 2.0.8
 
-Kuten oletinkin se toimii
+Kuten oletinkin se toimii!
 
 Ja kyseessä on yksinkertainen init.sls tiedosto:
 
+        micro:
+        pkg.installed:
+            - name: "micro"
+
+Ja homma rockaa! Alan jo päästä tietojen menettämisen tuskasta.                
+        
+Totean nopeasti että helpoin tapa asentaa windowsille micro on luoda se idempotentti tilalla. 
+
+
+Windowsilla siirrän .exe tiedoston `C://windows/system32` kansioon.
+
+Totean nopeasti että helpoin tapa on luoda suoraan idempotentti tila sitä varte
+           
         microforwin:
         file.managed:
             - name: "C:\Windows\System32\micro.exe"
@@ -318,22 +331,29 @@ Lopputulos:
 image.png
 
 
-
-Windowsilla siirrän .exe tiedoston `C://windows/system32` kansioon.
-
-Totean nopeasti että helpoin tapa on luoda suoraan idempotentti tila sitä varten
-
-
-
-### Apache
 ### Django kehitysympäristö
 - UFW Tarvittavat portit auki
-### Windows koneet
 
-### Visual Studio Basic
+### Dokumentaatiota offline käyttöön (linuzx):
 
-### Tarvittavat Dokumentaatiot OFFLINE työskentelyyn
+Tavoitteena on ladata linux koneille offline dokumentaatiota Offline työskentelyyn. Ohjelmana käytän Tero Karvisen KanaSirja ohjelmaa.
+Lähde: https://terokarvinen.com/2022/ks-kanasirja-offline-tui-dictionary/
 
+Ohjelman käyttämiseen tarvitsen: 
+ - KS ohjelman (https://terokarvinen.com/2022/ks-kanasirja-offline-tui-dictionary/ks)
+ - Offline kirjastot: (https://terokarvinen.com/ks-dict/)
+ - FZF ja UNZIP ohjelman (virallisesta paketinhallinasta)
+
+ Käytän avukseni terokarvisen artikkelia aiheesta 
+ lähde: https://terokarvinen.com/2022/ks-kanasirja-offline-tui-dictionary/#quickstart
+
+    wget https://terokarvinen.com/2022/ks-kanasirja-offline-tui-dictionary/ks
+    chmod a+x ks
+Tällä komenolla ladataan sanakirjastot
+
+        $ mkdir $HOME/.config/ks/dictionaries/; cd $HOME/.config/ks/dictionaries/
+        $ wget --continue -nd -np -r -l1 -A '*.zip' https://terokarvinen.com/ks-dict/
+Näillä komenoilla ladataan kirjastot kansioon `/home/.config/ks/dictionaries/` jonka jälkeen ne puretaan.
 
 
 
