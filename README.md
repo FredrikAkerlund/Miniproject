@@ -27,6 +27,8 @@ Kun käyttäjä asentaa hänen pitää asettaa Salt-minion id joko f* tai w' alk
 
 Top tiedoston avulla ylläpitäjä voi suoraan asentaa ohjelmia kaikille windows sekä linux koneille. 
 
+Modulin voi ottaa käyttöön kloonamalla repository ja lisätä kaikki tiedostot pl. lisenssi ja readme.md tiedosto `srv/salt` kansioon.
+
 ## Alustus
 
 Aloitan työskentelyn poistamalla kaikki vanhat virtuaalikoneet mitä loin kurssin aikana Vagrant:illa komenolla `vagrant destroy`.
