@@ -3,3 +3,6 @@ chocolatey:
 choco:
   chocolatey.installed:
     - name: 'vscode'
+choco:
+  chocolatey.installed:
+    - name: 'vlc'

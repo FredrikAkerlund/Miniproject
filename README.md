@@ -1,4 +1,4 @@
-# Alpha versio
+
 # Miniproject
 Dev enviroment created with salt
 
@@ -6,6 +6,26 @@ Tämän modulin tarkoitus on luoda käyttäjälle kehitysympäristön johon on a
 
 Tämän modulin tarkoitus on luoda käyttäjälle valmis työasema jossa hän voin työskenellä ja tarvittavat työkalut ovat saatavilla.
 
+Modulin loppuasetelma:
+
+Linux koneille:
+
+ - Apache2 webbipalvelin jossa on mahdollistettu käyttäjien kotihakemisto kehitystä varten
+ - Tarvittavia työkaluja (visual Studio code)
+ - Micro
+- Offline työskentelyyn Tero karvisen KanaSirja (ohjelma jolla voidaan selata eri ohjelmien dokumentaatiota)
+
+Windows koneille:
+ - Micron asennus
+ - Visual studio code asennus
+ - Chocolatey paketin hallinta ohjelma
+
+
+Asennus toteutuu top.sls tiedoston kanssa. 
+
+Kun käyttäjä asentaa hänen pitää asettaa Salt-minion id joko f* tai w' alkuiseksi.
+
+Top tiedoston avulla ylläpitäjä voi suoraan asentaa ohjelmia kaikille windows sekä linux koneille. 
 
 ## Alustus
 
@@ -427,7 +447,27 @@ Lopputulos:
 
 Homma on rock!
 
-En pysty lisäämään kaikkia kirjastoja GIT mutta init.sls tiedoston ja binäärin pystyn lisäämään.
+Git alkoi temppuilemaan ja jostain syystä en pysty lisäämään source githubiin.
+
+### TOPPI tiedoston luominen.
+
+Luon top tiedoston joka automaattisesti ajaa kaikki komennot tarvitsijoille.
+
+Tämä top tiedosto toimii siten että SALT orjien nimet pitää alkaa joko `f` = linux ja `w`=windows.
+
+Tällä tiedostolla herra pystyy käskemään kaikki koneet tarvittavin osin configuroitavaksi.
+
+Kokeilen tätä. Palautan muutaman orja koneen jossa on graaffinen liittymä alkuperäiseen tilaan ja kokeilen toimiiko nämä.
+
+Alkuvaihe on siis tyhjä kone.
+
+Lopputilanne:
+
+
+
+
+
+
 
 
 
