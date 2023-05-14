@@ -1,0 +1,68 @@
+#!/bin/bash
+# Copyright 2022 Tero Karvinen http://TeroKarvinen.com
+
+shopt -s globstar # use /**/ to recurse into directories
+
+function append() { # append text on every line
+	SUF="$1"
+	while read -r line
+	do
+	    echo -e "$line $SUF"
+	done
+}
+
+function zipLs() { # list zip file contents, with file name on each line "foo.zip some/file.md"
+	KSDICTS=$(realpath $KSDICTS)  # follow symlinks, dont print garbage over fzf TUI
+	for ZIPFILE in $KSDICTS
+	do
+		#echo "Loading '$ZIPFILE'..." 1>&2
+		zipinfo -1 "$ZIPFILE"|append "		$ZIPFILE"
+	done
+	
+}
+
+function cmdHelp() {
+	cat <<-EOT
+ks - Interactively search and read zip file dictionaries
+ks [OPTIONS] [QUERY]
+By default, opens a TUI to search and browse documentation
+
+ks --grep foo # show all lines of documentation with string "foo"
+
+- Very fast fuzzy find as you type
+- Support regular zip files
+Place your dictionaries (zip-files) under \$KSDICTS 
+\$KSDICTS: $KSDICTS
+Less than 50 line shell script, requires only bash, find, unzip and fzf. 
+Dictionaries will be available on http://TeroKarvinen.com/ks
+Zip files should can be created with 'zip -r --no-dir-entries mdn-2022.zip mdn-2022/',
+and should only contain plain text files. Good: .md, .go, .txt Bad: .html, .jpg. 
+Free software, GNU General Public License, version 2
+ks version 0.5 Copyright 2022 Tero Karvinen http://TeroKarvinen.com/ks
+EOT
+}
+
+function cmdGrep() {
+	for ZIP in $KSDICTS
+	do
+		if [ ! -e "$ZIP" ]; then # skip leftover ** dir patterns
+			continue
+		fi
+		zipgrep "$*" "$ZIP"
+	done
+}
+
+# init
+mkdir -p "$HOME/.config/ks/dictionaries/"
+
+if [ -z "$KSDICTS" ]; then
+	KSDICTS="/opt/ks/dictionaries/**/*.zip $HOME/.config/ks/dictionaries**/*.zip"
+fi
+
+case $1 in
+	-h|--help) cmdHelp; exit;;
+	-g|--grep) shift; cmdGrep "$@"; exit;;
+esac
+
+# main
+echo "https://TeroKarvinen.com/ks" 1>&2
