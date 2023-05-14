@@ -258,7 +258,7 @@ Lopputulos:
 
 
 ### Apachen asennus
-Tässä huomiona että tein apachen asennusta mutta menetin kaiken työni kesken raportointia. Joten näytän miltä init.sls tiedostoni näyttää lopussa ja yritän muistaa mitä vaiheta työskentelyssä tapahtui.
+Tässä huomiona että tein apachen asennusta pitkään ja törmäsin useaan ongelmaan mutta menetin kaiken raportointi työni kesken raportointia. Joten näytän miltä init.sls tiedostoni näyttää lopussa ja yritän muistaa mitä vaiheta työskentelyssä tapahtui.
 
                 apache_module:
                   pkg.installed:
