@@ -427,6 +427,10 @@ Lopputulos:
 
 Homma on rock!
 
+En pysty lisäämään kaikkia kirjastoja GIT mutta init.sls tiedoston ja binäärin pystyn lisäämään.
+
+
+
 
 
 
