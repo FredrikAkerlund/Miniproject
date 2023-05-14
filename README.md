@@ -328,7 +328,7 @@ Totean nopeasti että helpoin tapa on luoda suoraan idempotentti tila sitä vart
 
 Lopputulos:
 
-image.png
+![image](https://github.com/FredrikAkerlund/Miniproject/assets/122887178/17ec6516-de05-401c-9fef-b04b018dd5c0)
 
 
 ### Django kehitysympäristö
@@ -354,6 +354,78 @@ Tällä komenolla ladataan sanakirjastot
         $ mkdir $HOME/.config/ks/dictionaries/; cd $HOME/.config/ks/dictionaries/
         $ wget --continue -nd -np -r -l1 -A '*.zip' https://terokarvinen.com/ks-dict/
 Näillä komenoilla ladataan kirjastot kansioon `/home/.config/ks/dictionaries/` jonka jälkeen ne puretaan.
+
+Lopputulos: 
+
+![image](https://github.com/FredrikAkerlund/Miniproject/assets/122887178/e3c4462d-f82d-4daa-b013-04305ebcccee)
+
+Ensimmäiseksi siirrän kaikki tiedostot (ks binääri + kirjastot) `/srv/salt/ks` kansioon
+Seuraavaksi luon init.sls tiedoston: 
+
+                fzf:
+                  pkg.installed
+                unzip:
+                  pkg.installed
+             ## Luodaan kansio missä kirjastot on
+                /opt/ks/dictionaries/:
+                  file.recurse:
+                    - makedirs: True
+                    - source: "salt://ks/dictionaries/"
+             ## Siirretään binääri tiedosto oikeaan kansioon  
+               /usr/local/bin/ks:
+                  file.managed:
+                    - source: "salt://ks/ks"
+                    - mode: "0755"
+
+Lopputulos: 
+
+                vagrant@fmaster:/srv/salt/ks/dictionaries$ sudo salt 'f003' state.apply 'ks'
+                f003:
+                ----------
+                          ID: fzf
+                    Function: pkg.installed
+                      Result: True
+                     Comment: All specified packages are already installed
+                     Started: 20:24:05.826272
+                    Duration: 43.858 ms
+                     Changes:
+                ----------
+                          ID: unzip
+                    Function: pkg.installed
+                      Result: True
+                     Comment: All specified packages are already installed
+                     Started: 20:24:05.870279
+                    Duration: 6.208 ms
+                     Changes:
+                ----------
+                          ID: /opt/ks/dictionaries/
+                    Function: file.recurse
+                      Result: True
+                     Comment: The directory /opt/ks/dictionaries/ is in the correct state
+                     Started: 20:24:05.878238
+                    Duration: 799.41 ms
+                     Changes:
+                ----------
+                          ID: /usr/local/bin/ks
+                    Function: file.managed
+                      Result: True
+                     Comment: File /usr/local/bin/ks is in the correct state
+                     Started: 20:24:06.677741
+                    Duration: 10.814 ms
+                     Changes:
+
+                Summary for f003
+                ------------
+                Succeeded: 4
+                Failed:    0
+                ------------
+                Total states run:     4
+                Total run time: 860.290 ms          
+
+
+"Too easy"
+
+Homma on rock!
 
 
 
