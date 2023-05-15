@@ -26,8 +26,10 @@ Asennus toteutuu top.sls tiedoston kanssa.
 Kun käyttäjä asentaa hänen pitää asettaa Salt-minion id joko f* tai w' alkuiseksi.
 
 Top tiedoston avulla ylläpitäjä voi suoraan asentaa ohjelmia kaikille windows sekä linux koneille. 
+Modulia voi käyttää jos SALT-stack on konfiguroitu.
+Artikkelista löytyy ohjeet arkitehtuurin alustamiseksi: https://terokarvinen.com/2023/salt-vagrant/
 
-Modulin voi ottaa käyttöön kloonamalla repository ja lisätä kaikki tiedostot pl. lisenssi ja readme.md tiedosto `srv/salt` kansioon.
+Modulin voi ottaa käyttöön kloonamalla repository herra koneelle ja siirtää kaikki tiedostot pl. lisenssi ja readme.md tiedosto `srv/salt` kansioon.
 
 ## Alustus
 
