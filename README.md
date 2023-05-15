@@ -355,9 +355,6 @@ Lopputulos:
 ![image](https://github.com/FredrikAkerlund/Miniproject/assets/122887178/17ec6516-de05-401c-9fef-b04b018dd5c0)
 
 
-### Django kehitysympäristö
-- UFW Tarvittavat portit auki
-
 ### Dokumentaatiota offline käyttöön (linuzx):
 
 Tavoitteena on ladata linux koneille offline dokumentaatiota Offline työskentelyyn. Ohjelmana käytän Tero Karvisen KanaSirja ohjelmaa.
@@ -461,11 +458,6 @@ Tämä top tiedosto toimii siten että SALT orjien nimet pitää alkaa joko `f` 
 
 Tällä tiedostolla herra pystyy käskemään kaikki koneet tarvittavin osin configuroitavaksi.
 
-Kokeilen tätä. Palautan muutaman orja koneen jossa on graaffinen liittymä alkuperäiseen tilaan ja kokeilen toimiiko nämä.
-
-Alkuvaihe on siis tyhjä kone.
-
-Lopputilanne:
 
 
 
